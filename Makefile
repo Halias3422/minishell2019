@@ -6,14 +6,20 @@
 #    By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2019/03/19 14:11:58 by vde-sain     #+#   ##    ##    #+#        #
-#    Updated: 2019/03/20 08:41:03 by vde-sain    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/03/22 14:34:03 by vde-sain    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRC = minishell.c
+SRC = minishell_srcs/main.c \
+	  minishell_srcs/minishell.c \
+	  minishell_srcs/util_tools.c \
+	  minishell_srcs/builtins.c \
+	  minishell_srcs/modif_env_data.c \
+	  minishell_srcs/echo_builtin.c \
+	  minishell_srcs/cd_builtin.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -30,7 +36,7 @@ LIBFT.A = ./libft/libft.a
 all: libs $(NAME)
 
 $(NAME): $(SRC) $(LIBFT.A) $(HEADER)
-		@$(CC) -o $(NAME) $(FLAGS) $(SRC) -I./includes $(LIBFT.A)
+		@$(CC) -o $(NAME) $(FLAGS) $(SRC) -I. $(LIBFT.A)
 		@echo "\033[1;32mMINISHELL								OK\033[0m"
 
 libs:
