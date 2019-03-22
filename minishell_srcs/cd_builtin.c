@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 13:32:57 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/22 15:44:02 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/22 18:57:36 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,6 +17,7 @@ void		cd_go_previous_folder(t_shell *shell, char *path)
 {
 	int		i;
 	char	*swap;
+	char	*tmp;
 
 	if (ft_strcmp(path, "..") == 0)
 	{
@@ -27,9 +28,12 @@ void		cd_go_previous_folder(t_shell *shell, char *path)
 		while (i >= 0 && shell->data[6][i] != '/')
 			i--;
 		shell->data[6][i] = '\0';
+		tmp = path;
 		path = ft_strjoin("/", path);
+//		free(tmp);
 		path = ft_strjoin(shell->data[6] + 4, path);
 		chdir(path);
+//		free(path);
 	}
 	else if (ft_strcmp(path, "-") == 0)
 	{
@@ -89,5 +93,6 @@ int			handle_cd_builtin(t_shell *shell)
 		is_builtin = check_path_of_cd(shell, path);
 	else
 		is_builtin = 0;
+	free(path);
 	return (is_builtin);
 }

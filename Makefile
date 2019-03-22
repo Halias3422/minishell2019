@@ -6,7 +6,7 @@
 #    By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2019/03/19 14:11:58 by vde-sain     #+#   ##    ##    #+#        #
-#    Updated: 2019/03/22 14:34:03 by vde-sain    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/03/22 17:55:16 by vde-sain    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -19,13 +19,15 @@ SRC = minishell_srcs/main.c \
 	  minishell_srcs/builtins.c \
 	  minishell_srcs/modif_env_data.c \
 	  minishell_srcs/echo_builtin.c \
-	  minishell_srcs/cd_builtin.c
+	  minishell_srcs/cd_builtin.c \
+	  minishell_srcs/setenv_builtin.c \
+	  minishell_srcs/free.c
 
 OBJ = $(SRC:.c=.o)
 
 CC = gcc
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -g
 
 LIBFT = ./libft/
 

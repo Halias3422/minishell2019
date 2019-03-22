@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 09:45:43 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/22 15:21:37 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/22 17:52:34 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,10 +20,7 @@ char		*get_curr_dir(char *pwd, char *curr_dir)
 	int		k;
 
 	if (ft_strlen(pwd) == 5)
-	{
-		ft_printf("je met le slash\n");
 		return ("/");
-	}
 	k = 0;
 	i = 0;
 	while (pwd[i])

@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/19 13:35:26 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/22 14:40:59 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/22 18:25:35 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,6 +27,11 @@ typedef struct		s_shell
 	char			*cmd;
 	char			*curr_dir;
 }					t_shell;
+
+typedef struct		s_setenv
+{
+	char			**data;
+}					t_setenv;
 
 /*
 **MAIN.C
@@ -75,5 +80,17 @@ int					handle_echo_builtin(t_shell *shell);
 */
 
 int					handle_cd_builtin(t_shell *shell);
+
+/*
+**SETENV_BUILTIN.C
+*/
+
+int					handle_setenv_builtin(t_shell *shell);
+
+/*
+**FREE.C
+*/
+
+void				exit_free(t_shell *shell);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/19 13:34:38 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/22 15:35:57 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/22 19:24:06 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -86,5 +86,7 @@ void		read_input(t_shell *shell)
 			shell->curr_dir = get_curr_dir(shell->data[6], shell->curr_dir);
 			ft_printf("{B.T.red.}-> {eoc} {B.T.blue.}%s :{eoc} ", shell->curr_dir);
 		}
+		free(shell->entry);
+		shell->entry = ft_strnew(255);
 	}
 }
