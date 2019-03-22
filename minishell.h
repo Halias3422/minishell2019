@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/19 13:35:26 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/22 18:25:35 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/22 19:32:00 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,6 +31,7 @@ typedef struct		s_shell
 typedef struct		s_setenv
 {
 	char			**data;
+	char			*var_name;
 }					t_setenv;
 
 /*

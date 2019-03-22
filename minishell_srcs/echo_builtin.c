@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 12:17:19 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/22 14:31:22 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/22 19:42:27 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,7 +44,7 @@ int			echo_dollar(t_shell *shell, int i)
 	{
 		if (ft_strncmp(dollar, shell->data[k], ft_strlen(dollar)) == 0)
 		{
-			ft_printf("%s\n", shell->data[k]);
+			ft_printf("%s\n", shell->data[k] + ft_strlen(dollar));
 			return (i + 1);
 		}
 		k++;
