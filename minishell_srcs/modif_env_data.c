@@ -6,19 +6,24 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 14:32:38 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/22 17:12:47 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 12:58:48 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char		**change_data_pwd(char **data, char *path)
+char		**change_data_pwd(char **data, char *path, t_shell *shell)
 {
-	free(data[25]);
-	data[25] = ft_strjoin("OLD", data[6]);
-	free(data[6]);
-	data[6] = ft_strjoin("PWD=", path);
+	int		old_pwd;
+	int		pwd;
+
+	pwd = get_pwd_int(shell);
+	old_pwd = get_old_pwd_int(shell);
+	free(data[old_pwd]);
+	data[old_pwd] = ft_strjoin("OLD", get_pwd(shell));
+	free(data[pwd]);
+	data[pwd] = ft_strjoin("PWD=", path);
 	return (data);
 }
 

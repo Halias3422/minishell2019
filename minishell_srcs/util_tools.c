@@ -6,12 +6,54 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 09:45:43 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/22 17:52:34 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 12:59:40 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		get_pwd_int(t_shell *shell)
+{
+	int		i;
+
+	i = 0;
+	while (shell->data[i])
+	{
+		if (ft_strncmp(shell->data[i], "PWD=", 4) == 0)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+char		*get_pwd(t_shell *shell)
+{
+	int		i;
+
+	i = 0;
+	while (shell->data[i])
+	{
+		if (ft_strncmp(shell->data[i], "PWD=", 4) == 0)
+			return (shell->data[i]);
+		i++;
+	}
+	return ("PWD not set");
+}
+
+int			get_old_pwd_int(t_shell *shell)
+{
+	int		i;
+
+	i = 0;
+	while (shell->data[i])
+	{
+		if (ft_strncmp(shell->data[i], "OLDPWD=", 7) == 0)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
 
 char		*get_curr_dir(char *pwd, char *curr_dir)
 {

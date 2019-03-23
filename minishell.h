@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/19 13:35:26 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/22 19:32:00 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 14:14:39 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -56,6 +56,9 @@ char				**free_db_tab(char **input);
 char				*clean_entry(t_shell *shell);
 char				**remove_first_backslash_n(t_shell *shell);
 char				*get_curr_dir(char *pwd, char *curr_dir);
+char				*get_pwd(t_shell *shell);
+int					get_old_pwd_int(t_shell *shell);
+int					get_pwd_int(t_shell *shell);
 
 /*
 **BUILTINS.C
@@ -68,7 +71,7 @@ int					check_for_builtins(t_shell *shell);
 */
 
 char				**copy_env_data(char **data, char **env);
-char				**change_data_pwd(char **data, char *path);
+char				**change_data_pwd(char **data, char *path, t_shell *shell);
 
 /*
 **ECHO_BUILTIN.C
@@ -87,6 +90,20 @@ int					handle_cd_builtin(t_shell *shell);
 */
 
 int					handle_setenv_builtin(t_shell *shell);
+
+/*
+**UNSETENV_BUILTIN.C
+*/
+
+int					handle_unsetenv_builtin(t_shell *shell);
+
+/*
+**HANDLE_DOLLAR.C
+*/
+
+char				*replace_dollar_tilde_var(char *entry, t_shell *shell);
+char				*put_home_in_entry(char *entry, t_shell *shell, int j,
+					int i);
 
 /*
 **FREE.C

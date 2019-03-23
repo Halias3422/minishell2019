@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 09:53:05 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/22 18:37:55 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 12:56:31 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,7 +35,7 @@ int			check_for_builtins(t_shell *shell)
 
 	check = 0;
 	i = -1;
-	if (ft_strcmp(shell->entry, "env") == 0)
+	if (ft_strcmp(shell->entry, "env") == 0 && check++ >= 0)
 	{
 		while (shell->data[++i])
 			ft_printf("%s\n", shell->data[i]);
@@ -49,6 +49,8 @@ int			check_for_builtins(t_shell *shell)
 //		exit_free(shell);
 		exit(0);
 	}
+	else if (ft_strncmp(shell->entry, "unsetenv", 8) == 0)
+		check = handle_unsetenv_builtin(shell);
 	check = check_for_builtins_2(shell, check);
 	return (check);
 }

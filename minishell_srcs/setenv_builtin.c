@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 17:55:01 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/22 20:19:01 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 12:59:22 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,10 +18,10 @@ char			**create_new_entry_env(t_shell *shell, t_setenv *setenv, int k)
 	char		**new_data;
 	int			i;
 
-	i = -1;
+	i = 0;
 	while (shell->data[i])
 		i++;
-	new_data = (char**)malloc(sizeof(char*) * i + 2);
+	new_data = (char**)malloc(sizeof(char*) * i + 10);
 	i = -1;
 	while (shell->data[++i])
 	{
@@ -53,10 +53,11 @@ void			add_setenv_to_env(t_shell *shell, t_setenv *setenv, int k)
 		}
 		i++;
 	}
+	if (i == 6)
+		shell->curr_dir = get_curr_dir(shell->data[get_pwd_int(shell)],
+			shell->curr_dir);
 	if (shell->data[i] == NULL)
-	{
 		shell->data = create_new_entry_env(shell, setenv, k);
-	}
 }
 
 int				handle_setenv_builtin(t_shell *shell)
@@ -79,7 +80,6 @@ int				handle_setenv_builtin(t_shell *shell)
 			i++;
 		setenv.var_name = ft_strnew(i);
 		setenv.var_name = ft_strncpy(setenv.var_name, setenv.data[k], i);
-		ft_printf("var_name = %s\n", setenv.var_name);
 		add_setenv_to_env(shell, &setenv, k);
 		k++;
 	}

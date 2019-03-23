@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 13:32:57 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/22 18:57:36 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 14:15:22 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,28 +18,31 @@ void		cd_go_previous_folder(t_shell *shell, char *path)
 	int		i;
 	char	*swap;
 	char	*tmp;
+	int		old_pwd;
 
+	old_pwd = get_old_pwd_int(shell);
 	if (ft_strcmp(path, "..") == 0)
 	{
-		i = ft_strlen(shell->data[6]);
-		free(shell->data[25]);
-		shell->data[25] = ft_strnew(i + 3);
-		shell->data[25] = ft_strjoin("OLDPWD=", shell->data[6] + 4);
-		while (i >= 0 && shell->data[6][i] != '/')
-			i--;
-		shell->data[6][i] = '\0';
+		i = ft_strlen(get_pwd(shell));
+		free(shell->data[old_pwd]);
+		shell->data[old_pwd] = ft_strnew(i + 3);
+		shell->data[old_pwd] = ft_strjoin("OLDPWD=", get_pwd(shell) + 4);
 		tmp = path;
 		path = ft_strjoin("/", path);
 //		free(tmp);
-		path = ft_strjoin(shell->data[6] + 4, path);
+		path = ft_strjoin(get_pwd(shell) + 4, path);
 		chdir(path);
 //		free(path);
+		while (i >= 0 && shell->data[get_pwd_int(shell)][i] != '/')
+			i--;
+		shell->data[get_pwd_int(shell)][i] = '\0';
+
 	}
 	else if (ft_strcmp(path, "-") == 0)
 	{
-		swap = shell->data[25] + 7;
-		shell->data[25] = ft_strjoin("OLD", shell->data[6]);
-		shell->data[6] = ft_strjoin("PWD=", swap);
+		swap = shell->data[old_pwd] + 7;
+		shell->data[old_pwd] = ft_strjoin("OLD", get_pwd(shell));
+		shell->data[get_pwd_int(shell)] = ft_strjoin("PWD=", swap);
 	}
 }
 
@@ -51,16 +54,16 @@ int			check_path_of_cd(t_shell *shell, char *path)
 	only_path = ft_strcpy(only_path, path);
 	if (path[0] == '/' && access(path, F_OK) == 0 && ft_strcmp(path, "..") != 0)
 	{
-		shell->data = change_data_pwd(shell->data, path);
+		shell->data = change_data_pwd(shell->data, path, shell);
 		chdir(path);
 	}
 	else if (ft_strcmp(path, "..") != 0 && ft_strcmp(path, "-") != 0)
 	{
 		path = ft_strjoin("/", path);
-		path = ft_strjoin(shell->data[6] + 4, path);
+		path = ft_strjoin(get_pwd(shell) + 4, path);
 		if (access(path, F_OK) == 0)
 		{
-			shell->data = change_data_pwd(shell->data, path);
+			shell->data = change_data_pwd(shell->data, path, shell);
 			chdir(path);
 		}
 		else
@@ -89,6 +92,11 @@ int			handle_cd_builtin(t_shell *shell)
 	while (j < len)
 		path[j++] = shell->entry[i++];
 	path[j] = '\0';
+	i = 0;
+	while (shell->data[i] && ft_strncmp(shell->data[i], "HOME=", 5) != 0)
+		i++;
+	if (ft_strlen(path) == 0 && shell->data[i] != NULL)
+		path = put_home_in_entry(path, shell, i, 0);
 	if (ft_strcmp(path, ".") != 0)
 		is_builtin = check_path_of_cd(shell, path);
 	else
