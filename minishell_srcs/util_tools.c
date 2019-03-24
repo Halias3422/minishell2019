@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 09:45:43 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/24 12:05:51 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/24 17:53:11 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,18 +27,13 @@ int		get_pwd_int(t_shell *shell)
 	return (-1);
 }
 
-char		*get_pwd(t_shell *shell)
+char		*get_pwd()
 {
-	int		i;
+	char	*pwd;
 
-	i = 0;
-	while (shell->data[i])
-	{
-		if (ft_strncmp(shell->data[i], "PWD=", 4) == 0)
-			return (shell->data[i]);
-		i++;
-	}
-	return ("PWD not set");
+	pwd = getcwd(NULL, 4096);
+	return (pwd);
+
 }
 
 int			get_old_pwd_int(t_shell *shell)
@@ -55,26 +50,15 @@ int			get_old_pwd_int(t_shell *shell)
 	return (-1);
 }
 
-char		*get_curr_dir(char *pwd, char *curr_dir)
+char		*get_curr_dir(char *curr_dir)
 {
 	int		i;
-	int		j;
-	int		k;
 
-	if (ft_strlen(pwd) == 5)
-		return ("/");
-	k = 0;
-	i = 0;
-	while (pwd[i])
-		i++;
-	j = i;
-	while (j >= 0 && pwd[j - 1] != '/')
-		j--;
-	curr_dir = (char*)malloc(sizeof(char) * (i - j) + 1);
-	while (j < i)
-		curr_dir[k++] = pwd[j++];
-	curr_dir[k] = '\0';
-	return (curr_dir);
+	curr_dir = getcwd(NULL, 4096);
+	i = ft_strlen(curr_dir);
+	while (i >= 0 && curr_dir[i] != '/')
+		i--;
+	return (curr_dir + i + 1);
 }
 
 char		**remove_first_backslash_n(t_shell *shell)

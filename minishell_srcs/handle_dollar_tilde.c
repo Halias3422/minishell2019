@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/23 10:06:49 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/24 08:59:47 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/24 13:09:35 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,7 +37,10 @@ char		*put_dol_var_in_entry(char *entry, char *dol_var, t_shell *shell,
 			while (shell->data[i] && ft_strncmp(shell->data[i], "HOME=", 5)
 					!= 0)
 				i++;
-			entry = ft_strjoin ("cd ", shell->data[i] + 5);
+			if (shell->data[i] == NULL)
+				ft_printf("HOME not set\n");
+			else
+				entry = ft_strjoin ("cd ", shell->data[i] + 5);
 		}
 		return (entry);
 	}

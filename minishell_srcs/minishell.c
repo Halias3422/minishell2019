@@ -6,13 +6,12 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/19 13:34:38 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/24 12:11:57 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/24 16:32:49 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdio.h>
 
 int			exec_command(t_shell *shell)
 {
@@ -73,9 +72,8 @@ void		read_input(t_shell *shell)
 
 	is_father = 1;
 	shell->curr_dir = NULL;
-	shell->curr_dir = get_curr_dir(shell->data[6], shell->curr_dir);
+	shell->curr_dir = get_curr_dir(shell->curr_dir);
 	ft_printf("{B.T.red.}-> {eoc} {B.T.blue.}%s :{eoc} ", shell->curr_dir);
-	free(shell->curr_dir);
 	while ((ret = read(0, shell->entry, 255)) && is_father == 1)
 	{
 		shell->entry = clean_entry(shell);
@@ -97,10 +95,8 @@ void		read_input(t_shell *shell)
 		}
 		if (is_father == 1)
 		{
-			shell->curr_dir = get_curr_dir(get_pwd(shell), shell->curr_dir);
+			shell->curr_dir = get_curr_dir(shell->curr_dir);
 			ft_printf("{B.T.red.}-> {eoc} {B.T.blue.}%s :{eoc} ", shell->curr_dir);
-			if (ft_strcmp(shell->curr_dir, "/") != 0)
-				free(shell->curr_dir);
 		}
 		free(shell->entry);
 		shell->entry = ft_strnew(255);

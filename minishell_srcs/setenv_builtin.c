@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 17:55:01 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/24 12:14:53 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/24 16:31:19 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,7 +44,7 @@ void			add_setenv_to_env(t_shell *shell, t_setenv *setenv, int k)
 	while (shell->data[i])
 	{
 		if (ft_strncmp(setenv->var_name, shell->data[i], ft_strlen(
-			setenv->var_name)) == 0)
+			setenv->var_name)) == 0 && ((shell->data[i][ft_strlen(setenv->var_name) + 1] == '=') || shell->data[i][ft_strlen(setenv->var_name)] == '='))
 		{
 			free(shell->data[i]);
 			shell->data[i] = ft_strnew(ft_strlen(setenv->data[k]));
@@ -54,8 +54,7 @@ void			add_setenv_to_env(t_shell *shell, t_setenv *setenv, int k)
 		i++;
 	}
 	if (i == 6)
-		shell->curr_dir = get_curr_dir(shell->data[get_pwd_int(shell)],
-			shell->curr_dir);
+		shell->curr_dir = get_curr_dir(shell->curr_dir);
 	if (shell->data[i] == NULL)
 		shell->data = create_new_entry_env(shell, setenv, k);
 }
@@ -78,12 +77,17 @@ int				handle_setenv_builtin(t_shell *shell)
 		i = 0;
 		while (setenv.data[k][i] && setenv.data[k][i] != '=')
 			i++;
+		 if (setenv.data[k][i] == '\0')
+			return (1);
 		setenv.var_name = ft_strnew(i);
 		setenv.var_name = ft_strncpy(setenv.var_name, setenv.data[k], i);
+
 		add_setenv_to_env(shell, &setenv, k);
 		k++;
 		free(setenv.var_name);
 	}
+	if (ft_strncmp(setenv.var_name, "PATH", 4) == 0)
+		shell->path = fill_shell_path(shell);
 	setenv.data = free_db_tab(setenv.data);
 	check = 1;
 	return (check);

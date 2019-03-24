@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/19 13:35:26 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/23 14:14:39 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/24 19:05:03 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,8 +55,8 @@ int					exec_command(t_shell *shell);
 char				**free_db_tab(char **input);
 char				*clean_entry(t_shell *shell);
 char				**remove_first_backslash_n(t_shell *shell);
-char				*get_curr_dir(char *pwd, char *curr_dir);
-char				*get_pwd(t_shell *shell);
+char				*get_curr_dir(char *curr_dir);
+char				*get_pwd();
 int					get_old_pwd_int(t_shell *shell);
 int					get_pwd_int(t_shell *shell);
 
@@ -71,7 +71,10 @@ int					check_for_builtins(t_shell *shell);
 */
 
 char				**copy_env_data(char **data, char **env);
+int					find_path(char **env);
 char				**change_data_pwd(char **data, char *path, t_shell *shell);
+char				**fill_shell_path(t_shell *shell);
+
 
 /*
 **ECHO_BUILTIN.C

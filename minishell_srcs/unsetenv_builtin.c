@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/23 09:17:46 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/24 12:32:48 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/24 16:44:19 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,11 +55,17 @@ void			remove_unset_to_env(t_shell *shell, t_setenv *unset)
 		while (shell->data[tab_len])
 			tab_len++;
 		j = 0;
-		while (j < tab_len)
+		while (shell->data[j] && j < tab_len)
 		{
 			if (ft_strncmp(unset->data[i], shell->data[j],
-			ft_strlen(unset->data[i])) == 0 && check++ >= 0)
+			ft_strlen(unset->data[i])) == 0 && check++ >= 0 &&
+			(shell->data[j][ft_strlen(unset->data[i])] + 1 == '=' ||
+			 shell->data[j][ft_strlen(unset->data[i])] == '='))
+			{
 				shell->data = remove_line_from_env(shell, j);
+				if (ft_strncmp(unset->data[i], "PATH", 4) == 0)
+					shell->path = fill_shell_path(shell);
+			}
 			j++;
 		}
 		if (check == 0)
@@ -81,6 +87,5 @@ int				handle_unsetenv_builtin(t_shell *shell)
 		unset.data = ft_strsplit(shell->entry + i, ' ');
 		remove_unset_to_env(shell, &unset);
 		check = 1;
-//		unset.data = free_db_tab(unset.data);
 		return (check);
 }
