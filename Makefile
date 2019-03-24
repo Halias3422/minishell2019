@@ -6,7 +6,7 @@
 #    By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2019/03/19 14:11:58 by vde-sain     #+#   ##    ##    #+#        #
-#    Updated: 2019/03/23 10:19:57 by vde-sain    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/03/24 08:46:52 by vde-sain    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -22,7 +22,7 @@ SRC = minishell_srcs/main.c \
 	  minishell_srcs/cd_builtin.c \
 	  minishell_srcs/setenv_builtin.c \
 	  minishell_srcs/unsetenv_builtin.c \
-	  minishell_srcs/handle_dollar.c \
+	  minishell_srcs/handle_dollar_tilde.c \
 	  minishell_srcs/free.c
 
 OBJ = $(SRC:.c=.o)

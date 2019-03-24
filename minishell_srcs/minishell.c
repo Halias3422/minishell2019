@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/19 13:34:38 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/23 13:48:55 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/24 09:14:25 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,7 +25,10 @@ int			exec_command(t_shell *shell)
 		return (1);
 	}
 	else if (father == 0)
+	{
+		ft_printf("avant exec shell->data->pwd = %s\n", shell->data[6]);
 		execve(shell->cmd, shell->input, shell->data);
+	}
 	return (0);
 }
 
@@ -80,6 +83,8 @@ void		read_input(t_shell *shell)
 			is_valid = check_if_input_valid(shell);
 			if (is_valid > -1)
 				is_father = exec_command(shell);
+			else
+				ft_printf("minishell: command not found: %s\n", shell->entry);
 		shell->input = free_db_tab(shell->input);
 		}
 		if (is_father == 1)

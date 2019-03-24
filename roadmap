@@ -1,0 +1,21 @@
+gerer les "" ->ex : creation de fichier "a b" ne doit donner qu un fichier
+
+voir pour le rm '\' -> lier deux fichiers entre eux
+
+message d'erreur pour commandes inconnues: (merci david)
+
+. ---> .: not enough arguments
+
+"-", "^", "!", ";", ":",  -> ca fait rien
+
+( -> subsh>
+
+" '-> dquote>
+
+& | -> minishell: parse error near '&'
+
+cd ~mauvaisnom -> minishell: no such user or named directory: mauvaisnom
+
+boucle inf quand commande = ".."
+
+faire le supersplitshell

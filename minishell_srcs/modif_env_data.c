@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 14:32:38 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/23 12:58:48 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/24 09:07:48 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,7 +35,7 @@ char		**copy_env_data(char **data, char **env)
 	data = (char**)malloc(sizeof(char*) * 34 + 1);
 	data[33] = NULL;
 	i = 0;
-	while (env[i])
+	while (i < 33)
 	{
 		len = ft_strlen(env[i]);
 		data[i] = (char*)malloc(sizeof(char) * len + 1);

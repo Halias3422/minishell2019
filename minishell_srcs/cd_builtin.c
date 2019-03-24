@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 13:32:57 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/23 14:15:22 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/24 09:38:18 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,6 +43,7 @@ void		cd_go_previous_folder(t_shell *shell, char *path)
 		swap = shell->data[old_pwd] + 7;
 		shell->data[old_pwd] = ft_strjoin("OLD", get_pwd(shell));
 		shell->data[get_pwd_int(shell)] = ft_strjoin("PWD=", swap);
+		chdir(shell->data[get_pwd_int(shell)] + 4);
 	}
 }
 

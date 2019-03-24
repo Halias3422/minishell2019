@@ -6,12 +6,35 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 09:53:05 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/23 12:56:31 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/24 09:08:29 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void		exiting_minishell(t_shell *shell)
+{
+	int		i;
+	int		j;
+	int		k;
+	char	*exit_val;
+
+	i = 4;
+	k = 0;
+	while (shell->entry[i] && (shell->entry[i] == 9 || shell->entry[i] == 10 ||
+				shell->entry[i] == 32))
+		i++;
+	j = i;
+	while (shell->entry[j] && ((shell->entry[j] >= '0' && shell->entry[j] <= '9')
+			||( shell->entry[j] == '-')))
+		j++;
+	exit_val = ft_strnew(j - i);
+	while (i < j)
+		exit_val[k++] = shell->entry[i++];
+	exit_free(shell);
+	exit (ft_atoi(exit_val));
+}
 
 int			check_for_builtins_2(t_shell *shell, int check)
 {
@@ -45,10 +68,7 @@ int			check_for_builtins(t_shell *shell)
 	else if (ft_strncmp(shell->entry, "cd", 2) == 0)
 		check = handle_cd_builtin(shell);
 	else if (ft_strncmp(shell->entry, "exit", 4) == 0)
-	{
-//		exit_free(shell);
-		exit(0);
-	}
+		exiting_minishell(shell);
 	else if (ft_strncmp(shell->entry, "unsetenv", 8) == 0)
 		check = handle_unsetenv_builtin(shell);
 	check = check_for_builtins_2(shell, check);
