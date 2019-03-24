@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 13:32:57 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/24 09:38:18 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/24 12:09:43 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,33 +17,36 @@ void		cd_go_previous_folder(t_shell *shell, char *path)
 {
 	int		i;
 	char	*swap;
-	char	*tmp;
 	int		old_pwd;
+	char	*pwd_data;
 
 	old_pwd = get_old_pwd_int(shell);
+	pwd_data = get_pwd(shell);
+	ft_printf("pwd_data = %s\n", pwd_data);
 	if (ft_strcmp(path, "..") == 0)
 	{
-		i = ft_strlen(get_pwd(shell));
+		i = ft_strlen(pwd_data);
 		free(shell->data[old_pwd]);
-		shell->data[old_pwd] = ft_strnew(i + 3);
-		shell->data[old_pwd] = ft_strjoin("OLDPWD=", get_pwd(shell) + 4);
-		tmp = path;
+		shell->data[old_pwd] = ft_strjoin("OLDPWD=", pwd_data + 4);
 		path = ft_strjoin("/", path);
-//		free(tmp);
-		path = ft_strjoin(get_pwd(shell) + 4, path);
+		path = free_strjoin_2(pwd_data + 4, path);
 		chdir(path);
-//		free(path);
+		free(path);
 		while (i >= 0 && shell->data[get_pwd_int(shell)][i] != '/')
 			i--;
 		shell->data[get_pwd_int(shell)][i] = '\0';
-
 	}
 	else if (ft_strcmp(path, "-") == 0)
 	{
-		swap = shell->data[old_pwd] + 7;
-		shell->data[old_pwd] = ft_strjoin("OLD", get_pwd(shell));
-		shell->data[get_pwd_int(shell)] = ft_strjoin("PWD=", swap);
-		chdir(shell->data[get_pwd_int(shell)] + 4);
+		i = get_pwd_int(shell);
+		swap = ft_strnew(ft_strlen(shell->data[old_pwd]) - 7);
+		swap = ft_strcpy(swap, shell->data[old_pwd] + 7);
+		free(shell->data[old_pwd]);
+		shell->data[old_pwd] = ft_strjoin("OLD", pwd_data);
+		free(shell->data[i]);
+		shell->data[i] = ft_strjoin("PWD=", swap);
+		free(swap);
+		chdir(shell->data[i] + 4);
 	}
 }
 
@@ -72,6 +75,7 @@ int			check_path_of_cd(t_shell *shell, char *path)
 	}
 	else
 		cd_go_previous_folder(shell, path);
+	free(only_path);
 	return (1);
 }
 

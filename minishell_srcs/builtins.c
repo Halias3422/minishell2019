@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 09:53:05 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/24 09:08:29 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/24 12:22:23 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,6 +26,11 @@ void		exiting_minishell(t_shell *shell)
 				shell->entry[i] == 32))
 		i++;
 	j = i;
+	if (shell->entry[i] == '\0')
+	{
+		exit_free(shell);
+		exit(0);
+	}
 	while (shell->entry[j] && ((shell->entry[j] >= '0' && shell->entry[j] <= '9')
 			||( shell->entry[j] == '-')))
 		j++;
@@ -67,8 +72,11 @@ int			check_for_builtins(t_shell *shell)
 		check = handle_echo_builtin(shell);
 	else if (ft_strncmp(shell->entry, "cd", 2) == 0)
 		check = handle_cd_builtin(shell);
-	else if (ft_strncmp(shell->entry, "exit", 4) == 0)
-		exiting_minishell(shell);
+	else if (ft_strncmp(shell->entry, "exit", 4) == 0i)
+	{
+		if (shell->entry[4] == '\0' || shell->entry[4] == 9 || shell->entry[4] == 10 || shell->entry[4] == 32)
+			exiting_minishell(shell);
+	}
 	else if (ft_strncmp(shell->entry, "unsetenv", 8) == 0)
 		check = handle_unsetenv_builtin(shell);
 	check = check_for_builtins_2(shell, check);

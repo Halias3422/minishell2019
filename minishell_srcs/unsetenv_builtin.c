@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/23 09:17:46 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/23 10:29:26 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/24 12:32:48 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,18 +44,26 @@ void			remove_unset_to_env(t_shell *shell, t_setenv *unset)
 {
 	int			i;
 	int			j;
+	int			tab_len;
+	int			check;
 
+	check = 0;
 	i = 0;
 	while (unset->data[i])
 	{
+		tab_len = 0;
+		while (shell->data[tab_len])
+			tab_len++;
 		j = 0;
-		while (shell->data[j])
+		while (j < tab_len)
 		{
 			if (ft_strncmp(unset->data[i], shell->data[j],
-			ft_strlen(unset->data[i])) == 0)
+			ft_strlen(unset->data[i])) == 0 && check++ >= 0)
 				shell->data = remove_line_from_env(shell, j);
 			j++;
 		}
+		if (check == 0)
+			ft_printf("unsetenv: no environment variable named: %s\n", unset->data[i]);
 		i++;
 	}
 }
@@ -73,5 +81,6 @@ int				handle_unsetenv_builtin(t_shell *shell)
 		unset.data = ft_strsplit(shell->entry + i, ' ');
 		remove_unset_to_env(shell, &unset);
 		check = 1;
+//		unset.data = free_db_tab(unset.data);
 		return (check);
 }

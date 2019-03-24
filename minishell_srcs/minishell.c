@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/19 13:34:38 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/24 09:14:25 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/24 12:11:57 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,7 +26,6 @@ int			exec_command(t_shell *shell)
 	}
 	else if (father == 0)
 	{
-		ft_printf("avant exec shell->data->pwd = %s\n", shell->data[6]);
 		execve(shell->cmd, shell->input, shell->data);
 	}
 	return (0);
@@ -49,11 +48,16 @@ int			check_if_input_valid(t_shell *shell)
 		shell->path[i][j + 1] = '\0';
 		if (access(shell->path[i], X_OK) == 0)
 		{
-			tmp = shell->path[i];
+			tmp = ft_strnew(ft_strlen(shell->path[i]));
+			tmp = ft_strcpy(tmp, shell->path[i]);
+			free(shell->path[i]);
 			shell->path[i] = shell->cmd;
-			shell->cmd = tmp;
+			shell->cmd = ft_strnew(ft_strlen(tmp));
+			shell->cmd = ft_strcpy(shell->cmd, tmp);
+			free(tmp);
 			return (i);
 		}
+		free(shell->path[i]);
 		shell->path[i] = shell->cmd;
 		i++;
 	}
@@ -71,6 +75,7 @@ void		read_input(t_shell *shell)
 	shell->curr_dir = NULL;
 	shell->curr_dir = get_curr_dir(shell->data[6], shell->curr_dir);
 	ft_printf("{B.T.red.}-> {eoc} {B.T.blue.}%s :{eoc} ", shell->curr_dir);
+	free(shell->curr_dir);
 	while ((ret = read(0, shell->entry, 255)) && is_father == 1)
 	{
 		shell->entry = clean_entry(shell);
@@ -82,15 +87,20 @@ void		read_input(t_shell *shell)
 			shell->path = remove_first_backslash_n(shell);
 			is_valid = check_if_input_valid(shell);
 			if (is_valid > -1)
+			{
 				is_father = exec_command(shell);
+				free(shell->cmd);
+			}
 			else
 				ft_printf("minishell: command not found: %s\n", shell->entry);
-		shell->input = free_db_tab(shell->input);
+			shell->input = free_db_tab(shell->input);
 		}
 		if (is_father == 1)
 		{
 			shell->curr_dir = get_curr_dir(get_pwd(shell), shell->curr_dir);
 			ft_printf("{B.T.red.}-> {eoc} {B.T.blue.}%s :{eoc} ", shell->curr_dir);
+			if (ft_strcmp(shell->curr_dir, "/") != 0)
+				free(shell->curr_dir);
 		}
 		free(shell->entry);
 		shell->entry = ft_strnew(255);

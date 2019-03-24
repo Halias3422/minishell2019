@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 09:45:43 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/23 12:59:40 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/24 12:05:51 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -124,17 +124,4 @@ char		*clean_entry(t_shell *shell)
 	}
 	free(shell->entry);
 	return (new_entry);
-}
-
-char		**free_db_tab(char **input)
-{
-	int		i;
-
-	i = 0;
-	while (input[i])
-	{
-		free(input[i]);
-		i++;
-	}
-	return (input);
 }

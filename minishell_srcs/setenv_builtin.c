@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 17:55:01 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/23 12:59:22 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/24 12:14:53 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,7 +21,7 @@ char			**create_new_entry_env(t_shell *shell, t_setenv *setenv, int k)
 	i = 0;
 	while (shell->data[i])
 		i++;
-	new_data = (char**)malloc(sizeof(char*) * i + 10);
+	new_data = (char**)malloc(sizeof(char*) * i + 20);
 	i = -1;
 	while (shell->data[++i])
 	{
@@ -82,8 +82,9 @@ int				handle_setenv_builtin(t_shell *shell)
 		setenv.var_name = ft_strncpy(setenv.var_name, setenv.data[k], i);
 		add_setenv_to_env(shell, &setenv, k);
 		k++;
+		free(setenv.var_name);
 	}
-
+	setenv.data = free_db_tab(setenv.data);
 	check = 1;
 	return (check);
 }

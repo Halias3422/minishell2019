@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/03 17:33:24 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/16 16:45:25 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/24 10:28:29 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -121,5 +121,6 @@ char				*ft_itoa_base_uns(unsigned long long nb, int base);
 char				*ft_strcapitalizer(char *str);
 int					check_content_equal(char *source, char *cmp);
 char				*free_both_strjoin(char *str1, char *str2);
+char				*free_strjoin_2(char *str1, char *str2);
 
 #endif

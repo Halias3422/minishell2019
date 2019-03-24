@@ -1,43 +1,25 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   free.c                                           .::    .:/ .      .::   */
+/*   free_strjoin_2.c                                 .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/03/22 17:13:58 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/24 10:13:42 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/03/24 10:26:23 by vde-sain     #+#   ##    ##    #+#       */
+/*   Updated: 2019/03/24 10:27:11 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "minishell.h"
 
-char		**free_db_tab(char **input)
+#include "libft.h"
+
+char		*free_strjoin_2(char *str1, char *str2)
 {
-	int		i;
+	char	*tmp;
 
-	i = 0;
-	while (input[i])
-		free(input[i++]);
-	free(input);
-	return (input);
-}
-
-void			exit_free(t_shell *shell)
-{
-	int			i;
-
-	i = 0;
-//	free(shell->curr_dir);
-	while (shell->data[i])
-		free(shell->data[i++]);
-	free(shell->data);
-	free(shell->entry);
-	i = 0;
-while (shell->path[i])
-		free(shell->path[i++]);
-	free(shell->path);
-	i = 0;
-//	free(shell->cmd);
+	tmp = str2;
+	str1 = ft_strjoin(str1, str2);
+	free(tmp);
+	return (str1);
 }
