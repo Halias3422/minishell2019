@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 09:47:42 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/24 19:05:31 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/25 07:00:15 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,11 +20,18 @@ int			main(int ac, char **av, char **env)
 
 	av = NULL;
 	i = -1;
-	shell.data = NULL;
 	shell.data = copy_env_data(shell.data, env);
-	shell.path = ft_strsplit(shell.data[find_path(env)] + 5, ':');
-	while (shell.path[++i])
-		shell.path[i] = free_strjoin(shell.path[i], "/");
+	if (env[0] != NULL)
+	{
+		shell.path = ft_strsplit(shell.data[find_path(env)] + 5, ':');
+		while (shell.path[++i])
+			shell.path[i] = free_strjoin(shell.path[i], "/");
+	}
+	else
+	{
+		shell.path = (char**)malloc(sizeof(char*) * 1);
+		shell.path[0] = NULL;
+	}
 	shell.entry = ft_strnew(255);
 	i = 0;
 	ac = 0;

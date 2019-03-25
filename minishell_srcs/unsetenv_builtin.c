@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/23 09:17:46 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/24 16:44:19 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/25 07:53:49 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -87,5 +87,6 @@ int				handle_unsetenv_builtin(t_shell *shell)
 		unset.data = ft_strsplit(shell->entry + i, ' ');
 		remove_unset_to_env(shell, &unset);
 		check = 1;
+		unset.data = free_db_tab(unset.data);
 		return (check);
 }

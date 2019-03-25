@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 14:32:38 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/24 19:04:40 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/25 09:21:08 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -49,23 +49,17 @@ char		**add_pwd_data(char **data, int usage)
 	while (tmp[i])
 		i++;
 	data = free_db_tab(data);
-	data = (char**)malloc(sizeof(char*) * i + 1);
+	data = (char**)malloc(sizeof(char*) * 255);
 	data[i + 1] = NULL;
-	ft_printf("usage = %d\n\n", usage);
 	while (tmp[++j])
 	{
 		data[j] = ft_strnew(ft_strlen(tmp[j]));
 		data[j] = ft_strcpy(data[j], tmp[j]);
-		ft_printf("pendant la copie data[%d] = %s\n", j, data[j]);
 	}
 	if (usage == 1)
 		data[i] = ft_strjoin("PWD=", get_pwd());
 	else if (usage == 2)
 		data[i] = ft_strjoin("OLDPWD=", get_pwd());
-	ft_printf("apres la copie data[0] = %s\n", data[0]);
-	ft_printf("i + 1 = %d\n", i + 1);
-
-	ft_printf("apres avoir mis NULL data[0] = %s\n", data[0]);
 	return (data);
 }
 
@@ -87,15 +81,6 @@ char		**change_data_pwd(char **data, char *path, t_shell *shell)
 		data = add_pwd_data(data, 1);
 	if (old_pwd == -1)
 		data = add_pwd_data(data, 2);
-	ft_printf("ICI data[0] = %s\n", data[0]);
-	int i;
-
-	i = 0;
-	while (data[i])
-	{
-		ft_printf("apres remplissage data[%d] = %s\n", i, data[i]);
-		i++;
-	}
 	return (data);
 }
 
@@ -122,7 +107,7 @@ char		**copy_env_data(char **data, char **env)
 	env_len = 0;
 	while (env[env_len])
 		env_len++;
-	data = (char**)malloc(sizeof(char*) * env_len + 1);
+	data = (char**)malloc(sizeof(char*) * env_len + 8);
 	data[env_len] = NULL;
 	i = 0;
 	while (i < env_len)

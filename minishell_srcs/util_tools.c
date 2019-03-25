@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 09:45:43 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/24 17:53:11 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/25 08:25:33 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,9 +30,16 @@ int		get_pwd_int(t_shell *shell)
 char		*get_pwd()
 {
 	char	*pwd;
-
-	pwd = getcwd(NULL, 4096);
-	return (pwd);
+	char	*buf;
+	char	*new_pwd;
+	
+	buf = NULL;
+	pwd = getcwd(buf, 4096);
+	new_pwd = ft_strnew(ft_strlen(pwd));
+	new_pwd = ft_strcpy(new_pwd, pwd);
+	free(pwd);
+	free(buf);
+	return (new_pwd);
 
 }
 
@@ -53,12 +60,19 @@ int			get_old_pwd_int(t_shell *shell)
 char		*get_curr_dir(char *curr_dir)
 {
 	int		i;
+	char	*buf;
+	char	*new_curr_dir;
 
-	curr_dir = getcwd(NULL, 4096);
+	buf = NULL;
+	curr_dir = getcwd(buf, 4096);
 	i = ft_strlen(curr_dir);
 	while (i >= 0 && curr_dir[i] != '/')
 		i--;
-	return (curr_dir + i + 1);
+	new_curr_dir = ft_strnew(i);
+	new_curr_dir = ft_strcpy(new_curr_dir, curr_dir + i + 1);
+	free(curr_dir);
+	free(buf);
+	return (new_curr_dir);
 }
 
 char		**remove_first_backslash_n(t_shell *shell)
@@ -67,7 +81,7 @@ char		**remove_first_backslash_n(t_shell *shell)
 	int		j;
 
 	i = 0;
-	while (shell->path[i])
+	while (shell->path != NULL && shell->path[i])
 	{
 		j = 0;
 		while (shell->path[i][j])

@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 17:13:58 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/24 10:13:42 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/25 07:58:39 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,7 +29,6 @@ void			exit_free(t_shell *shell)
 	int			i;
 
 	i = 0;
-//	free(shell->curr_dir);
 	while (shell->data[i])
 		free(shell->data[i++]);
 	free(shell->data);

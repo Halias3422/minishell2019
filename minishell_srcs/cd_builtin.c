@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 13:32:57 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/24 18:50:56 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/25 08:29:43 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,6 +35,9 @@ int				check_forbidden_dir(char *path, t_shell *shell)
 	return (1);
 }
 
+//RETRAVAILLER CETTE FONCTION EN CAS D ENV VIDE
+
+
 void		cd_go_previous_folder(t_shell *shell, char *path)
 {
 	int		i;
@@ -49,7 +52,8 @@ void		cd_go_previous_folder(t_shell *shell, char *path)
 	if (ft_strcmp(path, "..") == 0)
 	{
 		i = ft_strlen(pwd_data);
-		free(shell->data[old_pwd]);
+		if (old_pwd > -1)
+			free(shell->data[old_pwd]);
 		shell->data[old_pwd] = ft_strjoin("OLDPWD=", pwd_data);
 		path = ft_strjoin("/", path);
 		path = free_strjoin_2(pwd_data, path);
@@ -84,7 +88,6 @@ int			check_path_of_cd(t_shell *shell, char *path)
 	if (path[0] == '/' && access(path, F_OK) == 0 && ft_strcmp(path, "..") != 0)
 	{
 		shell->data = change_data_pwd(shell->data, path, shell);
-		ft_printf("apres data = %s\n", shell->data[0]);
 		if (check_forbidden_dir(path, shell) == 0)
 			chdir(path);
 	}
