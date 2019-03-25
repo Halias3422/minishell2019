@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/19 13:35:26 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/24 19:05:03 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/25 15:20:16 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,6 +32,7 @@ typedef struct		s_setenv
 {
 	char			**data;
 	char			*var_name;
+	int				check;
 }					t_setenv;
 
 /*
@@ -45,7 +46,7 @@ int					main(int ac, char **av, char **env);
 */
 
 void				read_input(t_shell *shell);
-int					check_if_input_valid(t_shell *shell);
+int					check_if_input_valid(t_shell *shell, int i, int j);
 int					exec_command(t_shell *shell);
 
 /*
@@ -56,6 +57,12 @@ char				**free_db_tab(char **input);
 char				*clean_entry(t_shell *shell);
 char				**remove_first_backslash_n(t_shell *shell);
 char				*get_curr_dir(char *curr_dir);
+
+
+/*
+**GET_PWD_OLD_PWD.C
+*/
+
 char				*get_pwd();
 int					get_old_pwd_int(t_shell *shell);
 int					get_pwd_int(t_shell *shell);
@@ -101,10 +108,18 @@ int					handle_setenv_builtin(t_shell *shell);
 int					handle_unsetenv_builtin(t_shell *shell);
 
 /*
-**HANDLE_DOLLAR.C
+**HANDLE_DOLLAR_TILDE.C
 */
 
 char				*replace_dollar_tilde_var(char *entry, t_shell *shell);
+char				*put_home_in_entry(char *entry, t_shell *shell, int j,
+					int i);
+
+/*
+**HANDLE_TILDE.C
+*/
+
+char				*replace_tilde(char *entry, t_shell *shell);
 char				*put_home_in_entry(char *entry, t_shell *shell, int j,
 					int i);
 

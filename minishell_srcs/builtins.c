@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 09:53:05 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/25 06:58:20 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/25 14:52:44 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -53,6 +53,12 @@ int			check_for_builtins_2(t_shell *shell, int check)
 	}
 	else if (ft_strncmp(shell->entry, "setenv", 6) == 0)
 		check = handle_setenv_builtin(shell);
+
+	else if (ft_strcmp(shell->entry, "clear") == 0)
+	{
+		ft_printf( "%c[2J", 27);
+		ft_printf("%c[H", 27);
+	}
 	return (check);
 }
 

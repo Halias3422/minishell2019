@@ -1,41 +1,57 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   free.c                                           .::    .:/ .      .::   */
+/*   get_pwd_old_pwd.c                                .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/03/22 17:13:58 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/25 09:34:42 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/03/25 09:40:59 by vde-sain     #+#   ##    ##    #+#       */
+/*   Updated: 2019/03/25 09:41:26 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char			**free_db_tab(char **input)
+int			get_pwd_int(t_shell *shell)
 {
-	int			i;
-
-	i = 0;
-	while (input[i])
-		free(input[i++]);
-	free(input);
-	return (input);
-}
-
-void			exit_free(t_shell *shell)
-{
-	int			i;
+	int		i;
 
 	i = 0;
 	while (shell->data[i])
-		free(shell->data[i++]);
-	free(shell->data);
-	free(shell->entry);
+	{
+		if (ft_strncmp(shell->data[i], "PWD=", 4) == 0)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+char		*get_pwd(void)
+{
+	char	*pwd;
+	char	*buf;
+	char	*new_pwd;
+
+	buf = NULL;
+	pwd = getcwd(buf, 4096);
+	new_pwd = ft_strnew(ft_strlen(pwd));
+	new_pwd = ft_strcpy(new_pwd, pwd);
+	free(pwd);
+	free(buf);
+	return (new_pwd);
+}
+
+int			get_old_pwd_int(t_shell *shell)
+{
+	int		i;
+
 	i = 0;
-while (shell->path[i])
-		free(shell->path[i++]);
-	free(shell->path);
-	i = 0;
+	while (shell->data[i])
+	{
+		if (ft_strncmp(shell->data[i], "OLDPWD=", 7) == 0)
+			return (i);
+		i++;
+	}
+	return (-1);
 }

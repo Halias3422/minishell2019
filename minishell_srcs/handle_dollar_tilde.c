@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/23 10:06:49 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/24 13:09:35 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/25 16:11:16 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,17 +21,22 @@ char		*put_dol_var_in_entry(char *entry, char *dol_var, t_shell *shell,
 	int		i;
 	int		j;
 
+	ft_printf("je passe ici\n");
 	j = 0;
 	i = -1;
 	new_entry = ft_strnew(l);
 	while (++i < l)
 		new_entry[i] = entry[i];
+
 	while (shell->data[j] && ft_strncmp(dol_var + 1, shell->data[j],
-			ft_strlen(dol_var + 1)) != 0)
+			ft_strlen(dol_var + 1)) != 0 && shell->data[j][ft_strlen(dol_var + 1) + 1] != '=')
+	{
 		j++;
+	ft_printf("dol_var + 1 = %s shell->data[j] = %s, lendol+ 1 = %d shell->data de= = {%c}\n", dol_var + 1, shell->data[j], ft_strlen(dol_var + 1), shell->data[j][ft_strlen(dol_var + 1) + 1]);
+	}
 	if (shell->data[j] == NULL)
 	{
-		if (ft_strncmp(entry, "cd", 2) == 0)
+	if (ft_strncmp(entry, "cd", 2) == 0)
 		{
 			i = 0;
 			while (shell->data[i] && ft_strncmp(shell->data[i], "HOME=", 5)
@@ -52,58 +57,8 @@ char		*put_dol_var_in_entry(char *entry, char *dol_var, t_shell *shell,
 	j = 0;
 	while (i < l)
 		left[j++] = entry[i++];
-//	left[j] = '\0';
 	new_entry = free_strjoin(new_entry, left);
 	return (new_entry);
-}
-
-char		*put_home_in_entry(char *entry, t_shell *shell, int j, int i)
-{
-	char	*new_entry;
-	int		k;
-
-	k = -1;
-	new_entry = ft_strnew(i);
-	while (++k < i)
-		new_entry[k] = entry[k];
-	new_entry = free_strjoin(new_entry, shell->data[j] + 5);
-	new_entry = free_strjoin(new_entry, entry + i + 1);
-	return (new_entry);
-}
-
-char		*replace_tilde(char *entry, t_shell *shell)
-{
-	int		i;
-	int		j;
-	char	*after_tilde;
-
-	j = 0;
-	i = 0;
-	while (shell->data[j] && ft_strncmp("HOME=", shell->data[j], 5) != 0)
-		j++;
-	while (entry[i] && entry[i] != '~')
-		i++;
-	if (entry[i] == '~' && (!entry[i + 1] || entry[i + 1] == 9 || entry[i + 1]
-		== 10 || entry[i + 1] == 32))
-	{
-		if (shell->data[j] != NULL)
-			entry = put_home_in_entry(entry, shell, j, i);
-		else
-			ft_printf("HOME not set\n");
-	}
-	else if (entry[i] == '~' && entry[i + 1])
-	{
-		after_tilde = ft_strnew(ft_strlen(entry) - i - 1);
-		after_tilde = ft_strcpy(after_tilde, entry + i + 1);
-		if (shell->data[j] != NULL)
-			entry = put_home_in_entry(entry, shell, j, i);
-		i = ft_strlen(entry);
-		while (i - 1 >= 0 && entry[i - 1] != '/')
-			i--;
-		entry[i] = '\0';
-		entry = free_strjoin(entry, after_tilde);
-	}
-	return (entry);
 }
 
 char		*replace_dollar_tilde_var(char *entry, t_shell *shell)

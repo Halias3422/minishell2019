@@ -6,37 +6,36 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 13:32:57 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/25 08:29:43 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/25 15:22:10 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int				check_forbidden_dir(char *path, t_shell *shell)
+int			check_forbidden_dir(char *path, t_shell *shell)
 {
-	char		*forbidden;
-	int			i;
+	char	*forbidden;
+	int		i;
 
-	if (access(path, X_OK) == 0)
+	if (access(path, X_OK) == 0 || access(path, F_OK) != 0)
 		return (0);
 	else
 	{
 		i = ft_strlen(shell->entry);
 		while (i >= 0 && shell->entry[i] != ' ')
 			i--;
-			forbidden = ft_strnew(ft_strlen(shell->entry) - i - 1);
-			forbidden = ft_strcpy(forbidden, shell->entry + i + 1);
-			if (ft_strcmp(forbidden, "-") != 0)
-				ft_printf("cd: permission denied: %s\n", forbidden);
-			else
-				ft_printf("cd: permission denied: %s\n", path);
+		forbidden = ft_strnew(ft_strlen(shell->entry) - i - 1);
+		forbidden = ft_strcpy(forbidden, shell->entry + i + 1);
+		if (ft_strcmp(forbidden, "-") != 0)
+			ft_printf("cd: permission denied: %s\n", forbidden);
+		else
+			ft_printf("cd: permission denied: %s\n", path);
 	}
 	return (1);
 }
 
 //RETRAVAILLER CETTE FONCTION EN CAS D ENV VIDE
-
 
 void		cd_go_previous_folder(t_shell *shell, char *path)
 {
@@ -94,7 +93,7 @@ int			check_path_of_cd(t_shell *shell, char *path)
 	else if (ft_strcmp(path, "..") != 0 && ft_strcmp(path, "-") != 0)
 	{
 		path = ft_strjoin("/", path);
-		path = ft_strjoin(get_pwd(shell) + 4, path);
+		path = ft_strjoin(get_pwd(shell), path);
 		if (access(path, F_OK) == 0)
 		{
 			if (check_forbidden_dir(path, shell) == 0)
@@ -103,7 +102,8 @@ int			check_path_of_cd(t_shell *shell, char *path)
 				chdir(path);
 			}
 		}
-		else if (is_contained_in("$", shell->entry, 0) <= 0 && check_forbidden_dir(path, shell) == 0)
+		else if (is_contained_in("$", shell->entry, 0) <= 0 &&
+		check_forbidden_dir(path, shell) == 0 && ft_strcmp(only_path, "~") != 0)
 			ft_printf("cd: no such file or directory: %s\n", only_path);
 	}
 	else
