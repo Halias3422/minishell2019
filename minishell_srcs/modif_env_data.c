@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 14:32:38 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/26 15:48:06 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/26 16:17:23 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -57,9 +57,10 @@ char		**add_pwd_data(char **data, int usage)
 		data[j] = ft_strcpy(data[j], tmp[j]);
 	}
 	if (usage == 1)
-		data[i] = ft_strjoin("PWD=", get_pwd());
+		data[i] = free_strjoin_2("PWD=", get_pwd());
 	else if (usage == 2)
-		data[i] = ft_strjoin("OLDPWD=", get_pwd());
+		data[i] = free_strjoin_2("OLDPWD=", get_pwd());
+	free_db_tab(tmp);
 	return (data);
 }
 

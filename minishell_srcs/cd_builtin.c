@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 13:32:57 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/26 11:00:06 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/26 16:13:45 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,7 +38,7 @@ int			check_forbidden_dir(char *path, t_shell *shell)
 char		*cd_is_not_absolute(t_shell *shell, char *path, char *only_path)
 {
 	path = ft_strjoin("/", path);
-	path = ft_strjoin(get_pwd(shell), path);
+	path = free_both_strjoin(get_pwd(shell), path);
 	if (access(path, F_OK) == 0)
 	{
 		if (check_forbidden_dir(path, shell) == 0)
@@ -66,9 +66,13 @@ int			check_path_of_cd(t_shell *shell, char *path)
 			chdir(path);
 	}
 	else if (ft_strcmp(path, "..") != 0 && ft_strcmp(path, "-") != 0)
+	{
 		path = cd_is_not_absolute(shell, path, only_path);
+		free(path);
+	}
 	else
 		cd_go_previous_folder(shell, path);
+
 	free(only_path);
 	return (1);
 }
