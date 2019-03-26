@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 12:17:19 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/25 06:55:48 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/26 14:15:51 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -52,6 +52,7 @@ int			echo_dollar(t_shell *shell, int i)
 	while (shell->entry[i] && shell->entry[i] != 9 && shell->entry[i] != 10 &&
 			shell->entry[i] != 32)
 		i++;
+	free(dollar);
 	return (i);
 }
 
@@ -65,7 +66,7 @@ int			handle_echo_builtin(t_shell *shell)
 	while (shell->entry[++i])
 	{
 		if (shell->entry[i] == '$' && check++ >= 0)
-			i = echo_dollar(shell , i + 1);
+		i = echo_dollar(shell, i + 1);
 	}
 	return (check);
 }

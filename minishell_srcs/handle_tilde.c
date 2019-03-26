@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/25 14:56:16 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/25 15:21:04 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/26 13:51:54 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,6 +23,7 @@ char		*put_home_in_entry(char *entry, t_shell *shell, int j, int i)
 	while (++k < i)
 		new_entry[k] = entry[k];
 	new_entry = free_strjoin(new_entry, shell->data[j] + 5);
+	if ((int)ft_strlen(entry) >= i + 1)
 	new_entry = free_strjoin(new_entry, entry + i + 1);
 	return (new_entry);
 }

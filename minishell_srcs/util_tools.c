@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 09:45:43 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/25 09:41:36 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/26 12:59:03 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,7 +24,7 @@ char		*get_curr_dir(char *curr_dir)
 	i = ft_strlen(curr_dir);
 	while (i >= 0 && curr_dir[i] != '/')
 		i--;
-	new_curr_dir = ft_strnew(i);
+	new_curr_dir = ft_strnew(i + 2);
 	new_curr_dir = ft_strcpy(new_curr_dir, curr_dir + i + 1);
 	free(curr_dir);
 	free(buf);

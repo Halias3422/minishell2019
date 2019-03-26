@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/19 13:35:26 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/25 15:20:16 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/26 11:05:45 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -58,7 +58,6 @@ char				*clean_entry(t_shell *shell);
 char				**remove_first_backslash_n(t_shell *shell);
 char				*get_curr_dir(char *curr_dir);
 
-
 /*
 **GET_PWD_OLD_PWD.C
 */
@@ -82,7 +81,6 @@ int					find_path(char **env);
 char				**change_data_pwd(char **data, char *path, t_shell *shell);
 char				**fill_shell_path(t_shell *shell);
 
-
 /*
 **ECHO_BUILTIN.C
 */
@@ -93,7 +91,14 @@ int					handle_echo_builtin(t_shell *shell);
 **CD_BUILTIN.C
 */
 
-int					handle_cd_builtin(t_shell *shell);
+int					handle_cd_builtin(t_shell *shell, int is_builtin, int len);
+int					check_forbidden_dir(char *path, t_shell *shell);
+
+/*
+**CD_GO_BACK.C
+*/
+
+void				cd_go_previous_folder(t_shell *shell, char *path);
 
 /*
 **SETENV_BUILTIN.C

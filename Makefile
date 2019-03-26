@@ -6,7 +6,7 @@
 #    By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2019/03/19 14:11:58 by vde-sain     #+#   ##    ##    #+#        #
-#    Updated: 2019/03/25 15:19:46 by vde-sain    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/03/26 10:58:43 by vde-sain    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -20,6 +20,7 @@ SRC = minishell_srcs/main.c \
 	  minishell_srcs/modif_env_data.c \
 	  minishell_srcs/echo_builtin.c \
 	  minishell_srcs/cd_builtin.c \
+	  minishell_srcs/cd_go_back.c \
 	  minishell_srcs/setenv_builtin.c \
 	  minishell_srcs/unsetenv_builtin.c \
 	  minishell_srcs/handle_dollar_tilde.c \

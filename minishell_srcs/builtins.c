@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 09:53:05 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/25 14:52:44 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/26 11:11:16 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,14 +31,14 @@ void		exiting_minishell(t_shell *shell)
 		exit_free(shell);
 		exit(0);
 	}
-	while (shell->entry[j] && ((shell->entry[j] >= '0' && shell->entry[j] <= '9')
-			||( shell->entry[j] == '-')))
+	while (shell->entry[j] && ((shell->entry[j] >= '0' && shell->entry[j] <=
+		'9') || (shell->entry[j] == '-')))
 		j++;
 	exit_val = ft_strnew(j - i);
 	while (i < j)
 		exit_val[k++] = shell->entry[i++];
 	exit_free(shell);
-	exit (ft_atoi(exit_val));
+	exit(ft_atoi(exit_val));
 }
 
 int			check_for_builtins_2(t_shell *shell, int check)
@@ -53,10 +53,9 @@ int			check_for_builtins_2(t_shell *shell, int check)
 	}
 	else if (ft_strncmp(shell->entry, "setenv", 6) == 0)
 		check = handle_setenv_builtin(shell);
-
 	else if (ft_strcmp(shell->entry, "clear") == 0)
 	{
-		ft_printf( "%c[2J", 27);
+		ft_printf("%c[2J", 27);
 		ft_printf("%c[H", 27);
 	}
 	return (check);
@@ -77,10 +76,11 @@ int			check_for_builtins(t_shell *shell)
 	else if (ft_strncmp(shell->entry, "echo", 4) == 0)
 		check = handle_echo_builtin(shell);
 	else if (ft_strncmp(shell->entry, "cd", 2) == 0)
-		check = handle_cd_builtin(shell);
-	else if (ft_strncmp(shell->entry, "exit", 4) == 0i)
+		check = handle_cd_builtin(shell, 0, 0);
+	else if (ft_strncmp(shell->entry, "exit", 4) == 0)
 	{
-		if (shell->entry[4] == '\0' || shell->entry[4] == 9 || shell->entry[4] == 10 || shell->entry[4] == 32)
+		if (shell->entry[4] == '\0' || shell->entry[4] == 9 ||
+			shell->entry[4] == 10 || shell->entry[4] == 32)
 			exiting_minishell(shell);
 	}
 	else if (ft_strncmp(shell->entry, "unsetenv", 8) == 0)

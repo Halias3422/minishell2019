@@ -6,7 +6,7 @@
 /*   By: vde-sain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/22 13:32:57 by vde-sain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/25 15:22:10 by vde-sain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/26 11:00:06 by vde-sain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,47 +35,22 @@ int			check_forbidden_dir(char *path, t_shell *shell)
 	return (1);
 }
 
-//RETRAVAILLER CETTE FONCTION EN CAS D ENV VIDE
-
-void		cd_go_previous_folder(t_shell *shell, char *path)
+char		*cd_is_not_absolute(t_shell *shell, char *path, char *only_path)
 {
-	int		i;
-	char	*swap;
-	int		old_pwd;
-	char	*pwd_data;
-
-	old_pwd = get_old_pwd_int(shell);
-	if (old_pwd == -1 || get_pwd_int(shell) == -1)
-		shell->data = change_data_pwd(shell->data, path, shell);
-	pwd_data = get_pwd();
-	if (ft_strcmp(path, "..") == 0)
+	path = ft_strjoin("/", path);
+	path = ft_strjoin(get_pwd(shell), path);
+	if (access(path, F_OK) == 0)
 	{
-		i = ft_strlen(pwd_data);
-		if (old_pwd > -1)
-			free(shell->data[old_pwd]);
-		shell->data[old_pwd] = ft_strjoin("OLDPWD=", pwd_data);
-		path = ft_strjoin("/", path);
-		path = free_strjoin_2(pwd_data, path);
 		if (check_forbidden_dir(path, shell) == 0)
+		{
+			shell->data = change_data_pwd(shell->data, path, shell);
 			chdir(path);
-		free(path);
-		while (i >= 0 && shell->data[get_pwd_int(shell)][i] != '/')
-			i--;
-		shell->data[get_pwd_int(shell)][i] = '\0';
+		}
 	}
-	else if (ft_strcmp(path, "-") == 0 && old_pwd > -1 && check_forbidden_dir(
-			shell->data[old_pwd] + 7, shell) == 0)
-	{
-		i = get_pwd_int(shell);
-		swap = ft_strnew(ft_strlen(shell->data[old_pwd]) - 7);
-		swap = ft_strcpy(swap, shell->data[old_pwd] + 7);
-		free(shell->data[old_pwd]);
-		shell->data[old_pwd] = ft_strjoin("OLD", pwd_data);
-		free(shell->data[i]);
-		shell->data[i] = ft_strjoin("PWD=", swap);
-		free(swap);
-		chdir(shell->data[i] + 4);
-	}
+	else if (is_contained_in("$", shell->entry, 0) <= 0 &&
+	check_forbidden_dir(path, shell) == 0 && ft_strcmp(only_path, "~") != 0)
+		ft_printf("cd: no such file or directory: %s\n", only_path);
+	return (path);
 }
 
 int			check_path_of_cd(t_shell *shell, char *path)
@@ -91,34 +66,18 @@ int			check_path_of_cd(t_shell *shell, char *path)
 			chdir(path);
 	}
 	else if (ft_strcmp(path, "..") != 0 && ft_strcmp(path, "-") != 0)
-	{
-		path = ft_strjoin("/", path);
-		path = ft_strjoin(get_pwd(shell), path);
-		if (access(path, F_OK) == 0)
-		{
-			if (check_forbidden_dir(path, shell) == 0)
-			{
-				shell->data = change_data_pwd(shell->data, path, shell);
-				chdir(path);
-			}
-		}
-		else if (is_contained_in("$", shell->entry, 0) <= 0 &&
-		check_forbidden_dir(path, shell) == 0 && ft_strcmp(only_path, "~") != 0)
-			ft_printf("cd: no such file or directory: %s\n", only_path);
-	}
+		path = cd_is_not_absolute(shell, path, only_path);
 	else
 		cd_go_previous_folder(shell, path);
 	free(only_path);
 	return (1);
 }
 
-int			handle_cd_builtin(t_shell *shell)
+int			handle_cd_builtin(t_shell *shell, int is_builtin, int len)
 {
 	char	*path;
 	int		i;
 	int		j;
-	int		len;
-	int		is_builtin;
 
 	j = 0;
 	i = 2;
